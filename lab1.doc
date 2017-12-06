@@ -1,0 +1,33 @@
+﻿===用在 case 语句里时会调用的方法
+通常用在 case 比较调用该方法，比如
+case some_object
+when /a regex/
+ # The regex matches
+when String
+ # some_object is kind of String
+when 2..4
+ # some_object is in the range 2..4
+when lambda {|x| some_crazy_custom_predicate }
+ # the lambda returned true
+end
+等同于
+if /a regex/ === some_object
+ # The regex matches
+elsif String === some_object
+ # some_object is kind of object
+elsif (2..4) === some_object
+ # some_object is in the range 2..4
+elsif lambda {|x| some_crazy_custom_predicate } === some_object
+ # the lambda returned true
+end
+
+三个等号的比较操作===
+通常情况下这中方式与==是一样的，但是在某些特定情况下，===有特殊的含义：
+在Range中===用于判断等号右边的对象是否包含于等号左边的Range；
+正则表达式中用于判断一个字符串是否匹配模式，
+Class定义===来判断一个对象是否为类的实例，
+Symbol定义===来判断等号两边的符号对象是否相同。
+(1..10) === 5 # true: 5属于range 1..10
+/\d+/ === "123"  # true: 字符串匹配这个模式
+String === "s"   # true: "s" 是一个字符串类的实例
+:s === "s"       # true 
